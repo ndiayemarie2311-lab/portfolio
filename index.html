@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ndeye Marie Ndiaye | Développeuse Web & Mobile</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230e0e0e'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='18' font-style='italic' fill='%23378ADD'>N</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #378ADD;
+      --blue-light: #0d2a45;
+      --blue-dark: #7ab8f5;
+      --teal-light: #0a2e22;
+      --teal-dark: #4ecfa0;
+      --purple-light: #1e1a3a;
+      --purple-dark: #a99df5;
+      --green: #25D366;
+      --amber: #EF9F27;
+      --border: rgba(255,255,255,0.1);
+      --bg: #0e0e0e;
+      --bg2: #1a1a1a;
+      --text: #f0f0f0;
+      --muted: #888888;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    img { display: block; width: 100%; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 48px;
+      background: rgba(14,14,14,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 20px; font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--blue); color: #fff !important;
+      padding: 8px 18px; border-radius: 20px;
+      font-size: 13px !important;
+      transition: opacity .2s !important;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 88px 48px 72px;
+      border-bottom: 0.5px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(55,138,221,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--blue-light); color: var(--blue-dark);
+      font-size: 12px; padding: 5px 14px; border-radius: 20px;
+      margin-bottom: 24px; font-weight: 500;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: var(--blue); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 52px; font-weight: 300;
+      line-height: 1.1; letter-spacing: -0.03em;
+      margin-bottom: 20px; max-width: 600px;
+    }
+    .hero h1 em { font-style: italic; color: var(--blue); }
+
+    .hero p {
+      font-size: 16px; color: var(--muted);
+      max-width: 480px; margin-bottom: 32px; line-height: 1.75;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+
+    .btn-primary {
+      background: var(--blue); color: #fff;
+      padding: 12px 28px; border-radius: 8px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      border: none; cursor: pointer; font-weight: 500;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent; color: var(--text);
+      padding: 12px 28px; border-radius: 8px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      border: 0.5px solid var(--border); cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-outline:hover { background: var(--bg2); transform: translateY(-1px); }
+
+    .hero-stats { display: flex; gap: 44px; }
+    .stat-val {
+      font-family: 'Fraunces', serif;
+      font-size: 28px; font-weight: 300; letter-spacing: -0.02em;
+    }
+    .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 64px 48px; border-bottom: 0.5px solid var(--border); }
+
+    .section-label {
+      font-size: 11px; color: var(--blue);
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 8px; font-weight: 500;
+    }
+
+    .section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 28px; font-weight: 300;
+      letter-spacing: -0.02em; margin-bottom: 36px;
+    }
+
+    /* ── ABOUT ── */
+    .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .about-text { font-size: 15px; color: var(--muted); line-height: 1.85; }
+
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-size: 12px; padding: 5px 14px; border-radius: 20px;
+      background: var(--bg2); border: 0.5px solid var(--border);
+      color: var(--muted); font-weight: 400;
+    }
+    .skill-tag.blue { background: var(--blue-light); color: var(--blue-dark); }
+    .skill-tag.teal { background: var(--teal-light); color: var(--teal-dark); }
+    .skill-tag.purple { background: var(--purple-light); color: var(--purple-dark); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .project-card:hover { border-color: rgba(55,138,221,0.4); transform: translateY(-3px); }
+
+    .project-img {
+      height: 200px; overflow: hidden;
+      background: var(--bg2);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .project-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    .project-body { padding: 20px; }
+    .project-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 8px;
+    }
+    .project-body h3 { font-size: 15px; font-weight: 500; }
+
+    .project-type {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      white-space: nowrap; font-weight: 500;
+    }
+    .type-node { background: var(--teal-light); color: var(--teal-dark); }
+    .type-wp { background: var(--blue-light); color: var(--blue-dark); }
+
+    .project-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.65; }
+
+    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tag {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      background: var(--bg2); color: var(--muted);
+      border: 0.5px solid var(--border);
+    }
+
+    .project-links { display: flex; gap: 8px; }
+    .link-btn {
+      font-size: 12px; padding: 7px 16px; border-radius: 8px;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      border: 0.5px solid var(--border);
+      background: transparent; color: var(--text);
+      transition: background .2s;
+    }
+    .link-btn:hover { background: var(--bg2); }
+    .link-btn.filled { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .link-btn.filled:hover { opacity: .88; background: var(--blue); }
+
+    /* ── SERVICES ── */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .service-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: border-color .2s;
+    }
+    .service-card:hover { border-color: rgba(55,138,221,0.4); }
+
+    .service-icon { font-size: 24px; margin-bottom: 14px; }
+    .service-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+    .service-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+    }
+    .pricing-card.featured { border: 2px solid var(--blue); }
+
+    .pricing-badge {
+      font-size: 11px; background: var(--blue-light); color: var(--blue-dark);
+      padding: 3px 11px; border-radius: 20px;
+      display: inline-block; margin-bottom: 14px; font-weight: 500;
+    }
+
+    .pricing-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 20px; font-weight: 300; margin-bottom: 4px;
+    }
+    .price {
+      font-family: 'Fraunces', serif;
+      font-size: 24px; font-weight: 300;
+      letter-spacing: -0.02em; margin: 12px 0 8px;
+    }
+    .price-desc { font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+
+    .price-features { list-style: none; margin-bottom: 24px; }
+    .price-features li {
+      font-size: 13px; color: var(--muted);
+      padding: 7px 0;
+      border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; gap: 9px;
+    }
+    .check {
+      width: 16px; height: 16px;
+      background: var(--teal-light); border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .check::after {
+      content: '';
+      width: 5px; height: 3px;
+      border-left: 1.5px solid var(--teal-dark);
+      border-bottom: 1.5px solid var(--teal-dark);
+      transform: rotate(-45deg) translateY(-1px);
+      display: block;
+    }
+
+    /* ── REVIEWS ── */
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .review-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .stars { color: var(--amber); font-size: 13px; margin-bottom: 12px; }
+    .review-text { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .review-author { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500; flex-shrink: 0;
+    }
+    .av-a { background: var(--blue-light); color: var(--blue-dark); }
+    .av-b { background: var(--teal-light); color: var(--teal-dark); }
+    .av-c { background: var(--purple-light); color: var(--purple-dark); }
+    .author-name { font-size: 13px; font-weight: 500; }
+    .author-role { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--bg2);
+      border-radius: var(--radius); padding: 56px 48px;
+      text-align: center;
+      border: 0.5px solid var(--border);
+    }
+    .contact-box h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 32px; font-weight: 300;
+      letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .contact-box p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+    .contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .wa-btn {
+      background: var(--green); color: #fff;
+      font-size: 14px; padding: 13px 28px; border-radius: 8px;
+      border: none; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; font-weight: 500;
+      transition: opacity .2s;
+    }
+    .wa-btn:hover { opacity: .88; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 0.5px solid var(--border);
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── FLOAT WHATSAPP ── */
+    .float-wa {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--green); color: #fff;
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; cursor: pointer; z-index: 1000;
+      box-shadow: 0 4px 16px rgba(37,211,102,.35);
+      transition: transform .2s;
+      text-decoration: none;
+    }
+    .float-wa:hover { transform: scale(1.08); }
+
+    /* ── FADE IN ANIMATION ── */
+    .fade-in {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-links { gap: 16px; }
+      .hero { padding: 56px 24px 48px; }
+      .hero h1 { font-size: 36px; }
+      .section { padding: 48px 24px; }
+      .about-content { grid-template-columns: 1fr; gap: 32px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ndeye<span>.dev</span></div>
+  <div class="nav-links">
+    <a href="#about">À propos</a>
+    <a href="#projects">Projets</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Tarifs</a>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><div class="dot"></div> Disponible pour missions freelance</div>
+  <h1>Développeuse <em>Web & Mobile</em><br>basée à Dakar</h1>
+  <p>Je conçois des sites modernes et des plateformes e-learning performantes pour entreprises, écoles et entrepreneurs.</p>
+  <div class="hero-btns">
+    <a href="#contact"><button class="btn-primary">Travaillons ensemble</button></a>
+    <a href="#projects"><button class="btn-outline">Voir mes projets</button></a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-val">4+</div><div class="stat-lbl">Projets livrés</div></div>
+    <div><div class="stat-val">L3</div><div class="stat-lbl">Licence Informatique</div></div>
+    <div><div class="stat-val">2+</div><div class="stat-lbl">Ans d'expérience</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section fade-in" id="about">
+  <div class="section-label">À propos</div>
+  <h2>Qui suis-je ?</h2>
+  <div class="about-content">
+    <div>
+      <div style="display:flex; gap:28px; align-items:center; margin-bottom:24px;">
+        <img src="images/moi.jpg.jpg" alt="Ndeye Marie Ndiaye" style="width:110px; height:110px; border-radius:50%; object-fit:cover; object-position:center top; border:3px solid #378ADD; flex-shrink:0;">
+        <p class="about-text">
+          Étudiante en Licence 3 informatique à Dakar, spécialisée en développement web, je conçois des solutions modernes pour entreprises, écoles et entrepreneurs. Passionnée par la création d'interfaces élégantes et de plateformes performantes, je combine design soigné et code efficace pour livrer des projets qui font la différence.
+        </p>
+      </div>
+    </div>
+    <div class="skills-grid">
+      <span class="skill-tag blue">PHP</span>
+      <span class="skill-tag blue">MySQL</span>
+      <span class="skill-tag blue">JavaScript</span>
+      <span class="skill-tag teal">Node.js</span>
+      <span class="skill-tag teal">WordPress</span>
+      <span class="skill-tag teal">Elementor</span>
+      <span class="skill-tag purple">UI/UX Design</span>
+      <span class="skill-tag purple">Supabase</span>
+      <span class="skill-tag">HTML / CSS</span>
+      <span class="skill-tag">WooCommerce</span>
+      <span class="skill-tag">Chart.js</span>
+      <span class="skill-tag">React</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section fade-in" id="projects">
+  <div class="section-label">Projets</div>
+  <h2>Mes réalisations</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-img">
+        <!-- Remplacer src par le chemin de votre image -->
+        <img src="images/projet4.jpg.jpeg" alt="GestionTontine — Application de gestion de tontines">
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3>GestionTontine</h3>
+          <span class="project-type type-node">Node.js</span>
+        </div>
+        <p class="project-desc">Application web de gestion de tontines — suivi des membres, cotisations, tours et dettes en temps réel avec tableau de bord complet.</p>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Dashboard</span>
+          <span class="tag">Finance</span>
+        </div>
+        <div class="project-links">
+          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="#"><button class="link-btn">Code</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <img src="images/projet1.jpg.jpeg" alt="Louma Moderne — Annuaire des commerces">
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3>Louma Moderne</h3>
+          <span class="project-type type-wp">WordPress</span>
+        </div>
+        <p class="project-desc">Annuaire en ligne des commerces de quartier — recherche intelligente, catégories et carte interactive pour trouver un commerce près de chez soi.</p>
+        <div class="project-tags">
+          <span class="tag">WordPress</span>
+          <span class="tag">Annuaire</span>
+          <span class="tag">Cartographie</span>
+        </div>
+        <div class="project-links">
+          <a href="#"><button class="link-btn filled">Démo</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <img src="images/projet2.jpg.jpeg" alt="StockPro — Gestion de stock">
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3>StockPro</h3>
+          <span class="project-type type-node">Node.js</span>
+        </div>
+        <p class="project-desc">Application de gestion de stock avec tableau de bord analytique, alertes de rupture, mouvements de produits et exports PDF/Excel.</p>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Chart.js</span>
+          <span class="tag">Dashboard</span>
+        </div>
+        <div class="project-links">
+          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="#"><button class="link-btn">Code</button></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <img src="images/projet3.jpg.jpeg" alt="Les Étoiles de Marie — Boutique e-commerce">
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <h3>Les Étoiles de Marie</h3>
+          <span class="project-type type-wp">WordPress</span>
+        </div>
+        <p class="project-desc">Boutique e-commerce de produits locaux sénégalais — mode, bijoux, beauté et artisanat. Livraison partout au Sénégal.</p>
+        <div class="project-tags">
+          <span class="tag">WordPress</span>
+          <span class="tag">WooCommerce</span>
+          <span class="tag">Elementor</span>
+          <span class="tag">E-commerce</span>
+        </div>
+        <div class="project-links">
+          <a href="#"><button class="link-btn filled">Démo</button></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section fade-in" id="services">
+  <div class="section-label">Services</div>
+  <h2>Ce que je propose</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <h3>Sites web professionnels</h3>
+      <p>Sites vitrines, e-commerce et portfolios modernes, rapides et optimisés pour tous les appareils.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📚</div>
+      <h3>Plateformes e-learning</h3>
+      <p>LMS complets avec gestion des cours, des étudiants, des paiements et tableaux de bord.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚙️</div>
+      <h3>Applications web</h3>
+      <p>Dashboards, outils de gestion de stock, tontines et applications métiers sur mesure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section fade-in" id="pricing">
+  <div class="section-label">Tarifs</div>
+  <h2>Formules & prix</h2>
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <h3>Basic</h3>
+      <div class="price">100 000 FCFA</div>
+      <div class="price-desc">Idéal pour une présence en ligne simple et efficace.</div>
+      <ul class="price-features">
+        <li><span class="check"></span>Site vitrine 3–5 pages</li>
+        <li><span class="check"></span>Design responsive mobile</li>
+        <li><span class="check"></span>Formulaire de contact</li>
+        <li><span class="check"></span>Livraison en 7 jours</li>
+      </ul>
+      <a href="https://wa.me/221779149055"><button class="btn-outline" style="width:100%">Choisir</button></a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Le plus populaire</div>
+      <h3>Pro</h3>
+      <div class="price">200 000 FCFA</div>
+      <div class="price-desc">Pour les entreprises qui veulent se démarquer en ligne.</div>
+      <ul class="price-features">
+        <li><span class="check"></span>Site complet + design premium</li>
+        <li><span class="check"></span>Intégration WhatsApp Business</li>
+        <li><span class="check"></span>Panneau d'administration</li>
+        <li><span class="check"></span>Livraison en 14 jours</li>
+      </ul>
+      <a href="https://wa.me/221779149055"><button class="btn-primary" style="width:100%">Choisir</button></a>
+    </div>
+
+    <div class="pricing-card">
+      <h3>Premium</h3>
+      <div class="price">300 000+ FCFA</div>
+      <div class="price-desc">Solution complète pour projets ambitieux et sur mesure.</div>
+      <ul class="price-features">
+        <li><span class="check"></span>Site + admin + SEO avancé</li>
+        <li><span class="check"></span>Plateforme e-learning ou stock</li>
+        <li><span class="check"></span>Support 3 mois inclus</li>
+        <li><span class="check"></span>Devis personnalisé</li>
+      </ul>
+      <a href="https://wa.me/221779149055"><button class="btn-outline" style="width:100%">Nous contacter</button></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section fade-in" id="avis">
+  <div class="section-label">Témoignages</div>
+  <h2>Avis clients</h2>
+
+  <!-- Avis chargés dynamiquement -->
+  <div class="reviews-grid" id="avis-container">
+    <p style="color:var(--muted); font-size:13px;">Chargement des avis...</p>
+  </div>
+
+  <!-- Formulaire laisser un avis -->
+  <div style="margin-top:48px; background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--radius); padding:32px; max-width:560px;">
+    <h3 style="font-size:16px; font-weight:500; margin-bottom:6px;">Laisser un avis</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:24px;">Vous avez travaillé avec moi ? Partagez votre expérience !</p>
+
+    <div id="form-message" style="display:none; padding:10px 16px; border-radius:8px; font-size:13px; margin-bottom:16px;"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+      <div>
+        <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:5px;">Votre nom *</label>
+        <input type="text" id="avis-nom" placeholder="Aminata Diallo" style="width:100%; padding:10px 13px; background:var(--bg); border:0.5px solid var(--border); border-radius:8px; color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif;">
+      </div>
+      <div>
+        <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:5px;">Votre rôle *</label>
+        <input type="text" id="avis-role" placeholder="Gérante, boutique en ligne" style="width:100%; padding:10px 13px; background:var(--bg); border:0.5px solid var(--border); border-radius:8px; color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif;">
+      </div>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:5px;">Note *</label>
+      <div id="star-selector" style="display:flex; gap:6px; font-size:22px; cursor:pointer;">
+        <span data-val="1">☆</span>
+        <span data-val="2">☆</span>
+        <span data-val="3">☆</span>
+        <span data-val="4">☆</span>
+        <span data-val="5">☆</span>
+      </div>
+      <input type="hidden" id="avis-note" value="5">
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <label style="font-size:12px; color:var(--muted); display:block; margin-bottom:5px;">Votre message *</label>
+      <textarea id="avis-message" rows="3" placeholder="Décrivez votre expérience avec Ndeye..." style="width:100%; padding:10px 13px; background:var(--bg); border:0.5px solid var(--border); border-radius:8px; color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif; resize:vertical;"></textarea>
+    </div>
+
+    <button onclick="envoyerAvis()" class="btn-primary">Envoyer mon avis</button>
+    <p style="font-size:11px; color:var(--muted); margin-top:10px;">Votre avis sera publié après validation.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section fade-in" id="contact" style="border-bottom: none;">
+  <div class="contact-box">
+    <div class="section-label" style="text-align:center; margin-bottom:12px;">Contact</div>
+    <h3>Démarrons votre projet</h3>
+    <p>Disponible pour missions freelance · Réponse sous 24h</p>
+    <div class="contact-btns">
+      <a href="https://wa.me/221779149055">
+        <button class="wa-btn">💬 WhatsApp · +221 77 914 90 55</button>
+      </a>
+      <a href="mailto:ndiayemarie2311@gmail.com">
+        <button class="btn-outline">✉️ Envoyer un email</button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Ndeye Marie Ndiaye</p>
+  <div class="footer-links">
+    <a href="#">GitHub</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/221779149055" class="float-wa" title="WhatsApp">💬</a>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Charger les avis depuis PHP ──
+  async function chargerAvis() {
+    const container = document.getElementById('avis-container');
+    try {
+      const res = await fetch('get_avis.php');
+      const data = await res.json();
+      if (!data.success || data.avis.length === 0) {
+        container.innerHTML = '<p style="color:var(--muted);font-size:13px;">Aucun avis pour l\'instant. Soyez le premier !</p>';
+        return;
+      }
+      const avatarColors = ['av-a','av-b','av-c'];
+      container.innerHTML = data.avis.map((a, i) => {
+        const initiales = a.nom.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+        const stars = '★'.repeat(a.note) + '☆'.repeat(5 - a.note);
+        return `
+          <div class="review-card">
+            <div class="stars">${stars}</div>
+            <p class="review-text">"${a.message}"</p>
+            <div class="review-author">
+              <div class="avatar ${avatarColors[i % 3]}">${initiales}</div>
+              <div>
+                <div class="author-name">${a.nom}</div>
+                <div class="author-role">${a.role}</div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    } catch(e) {
+      container.innerHTML = '<p style="color:var(--muted);font-size:13px;">Impossible de charger les avis.</p>';
+    }
+  }
+  chargerAvis();
+
+  // ── Sélecteur d'étoiles ──
+  const stars = document.querySelectorAll('#star-selector span');
+  let noteChoisie = 5;
+  function updateStars(val) {
+    stars.forEach(s => {
+      s.textContent = parseInt(s.dataset.val) <= val ? '★' : '☆';
+      s.style.color = parseInt(s.dataset.val) <= val ? '#EF9F27' : 'var(--muted)';
+    });
+  }
+  updateStars(5);
+  stars.forEach(s => {
+    s.addEventListener('click', () => {
+      noteChoisie = parseInt(s.dataset.val);
+      document.getElementById('avis-note').value = noteChoisie;
+      updateStars(noteChoisie);
+    });
+    s.addEventListener('mouseover', () => updateStars(parseInt(s.dataset.val)));
+    s.addEventListener('mouseout', () => updateStars(noteChoisie));
+  });
+
+  // ── Envoyer un avis ──
+  async function envoyerAvis() {
+    const nom     = document.getElementById('avis-nom').value.trim();
+    const role    = document.getElementById('avis-role').value.trim();
+    const message = document.getElementById('avis-message').value.trim();
+    const note    = document.getElementById('avis-note').value;
+    const msgBox  = document.getElementById('form-message');
+
+    if (!nom || !role || !message) {
+      msgBox.style.display = 'block';
+      msgBox.style.background = '#2e0a0a';
+      msgBox.style.color = '#f09595';
+      msgBox.textContent = 'Veuillez remplir tous les champs.';
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('nom', nom);
+    formData.append('role', role);
+    formData.append('message', message);
+    formData.append('note', note);
+
+    try {
+      const res  = await fetch('ajouter_avis.php', { method: 'POST', body: formData });
+      const data = await res.json();
+      msgBox.style.display = 'block';
+      if (data.success) {
+        msgBox.style.background = '#0a2e22';
+        msgBox.style.color = '#4ecfa0';
+        msgBox.textContent = data.message;
+        document.getElementById('avis-nom').value = '';
+        document.getElementById('avis-role').value = '';
+        document.getElementById('avis-message').value = '';
+        noteChoisie = 5;
+        updateStars(5);
+      } else {
+        msgBox.style.background = '#2e0a0a';
+        msgBox.style.color = '#f09595';
+        msgBox.textContent = data.message;
+      }
+    } catch(e) {
+      msgBox.style.display = 'block';
+      msgBox.style.background = '#2e0a0a';
+      msgBox.style.color = '#f09595';
+      msgBox.textContent = 'Erreur réseau. Vérifiez que XAMPP est démarré.';
+    }
+  }
+</script>
+
+</body>
+</html>
