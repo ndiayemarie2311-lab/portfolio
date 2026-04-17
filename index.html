@@ -479,7 +479,7 @@
           <span class="tag">Finance</span>
         </div>
         <div class="project-links">
-          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="https://gestion-tontine-g9pk.vercel.app" target="_blank"><button class="link-btn filled">Démo</button></a>
           <a href="#"><button class="link-btn">Code</button></a>
         </div>
       </div>
@@ -501,7 +501,7 @@
           <span class="tag">Cartographie</span>
         </div>
         <div class="project-links">
-          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="#" title="Bientôt en ligne"><button class="link-btn filled" style="opacity:.6;">Bientôt</button></a>
         </div>
       </div>
     </div>
@@ -523,7 +523,7 @@
           <span class="tag">Dashboard</span>
         </div>
         <div class="project-links">
-          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="https://gestion-stock-chi.vercel.app" target="_blank"><button class="link-btn filled">Démo</button></a>
           <a href="#"><button class="link-btn">Code</button></a>
         </div>
       </div>
@@ -546,7 +546,7 @@
           <span class="tag">E-commerce</span>
         </div>
         <div class="project-links">
-          <a href="#"><button class="link-btn filled">Démo</button></a>
+          <a href="#" title="Bientôt en ligne"><button class="link-btn filled" style="opacity:.6;">Bientôt</button></a>
         </div>
       </div>
     </div>
@@ -706,8 +706,14 @@
 <!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/221779149055" class="float-wa" title="WhatsApp">💬</a>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // Fade-in on scroll
+  // ── Supabase config ──
+  const SUPABASE_URL = 'https://peiiuojrgsrewbkjhxdj.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_HstG1HtdJnHtMpR3EH-pQA_hlVbjxrl';
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ── Fade-in on scroll ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -715,18 +721,22 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // ── Charger les avis depuis PHP ──
+  // ── Charger les avis depuis Supabase ──
   async function chargerAvis() {
     const container = document.getElementById('avis-container');
     try {
-      const res = await fetch('get_avis.php');
-      const data = await res.json();
-      if (!data.success || data.avis.length === 0) {
+      const { data, error } = await db
+        .from('avis')
+        .select('*')
+        .eq('approuve', true)
+        .order('date_ajout', { ascending: false });
+
+      if (error || !data || data.length === 0) {
         container.innerHTML = '<p style="color:var(--muted);font-size:13px;">Aucun avis pour l\'instant. Soyez le premier !</p>';
         return;
       }
       const avatarColors = ['av-a','av-b','av-c'];
-      container.innerHTML = data.avis.map((a, i) => {
+      container.innerHTML = data.map((a, i) => {
         const initiales = a.nom.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
         const stars = '★'.repeat(a.note) + '☆'.repeat(5 - a.note);
         return `
@@ -773,7 +783,7 @@
     const nom     = document.getElementById('avis-nom').value.trim();
     const role    = document.getElementById('avis-role').value.trim();
     const message = document.getElementById('avis-message').value.trim();
-    const note    = document.getElementById('avis-note').value;
+    const note    = parseInt(document.getElementById('avis-note').value);
     const msgBox  = document.getElementById('form-message');
 
     if (!nom || !role || !message) {
@@ -784,20 +794,16 @@
       return;
     }
 
-    const formData = new FormData();
-    formData.append('nom', nom);
-    formData.append('role', role);
-    formData.append('message', message);
-    formData.append('note', note);
-
     try {
-      const res  = await fetch('ajouter_avis.php', { method: 'POST', body: formData });
-      const data = await res.json();
+      const { error } = await db
+        .from('avis')
+        .insert([{ nom, role, message, note, approuve: false }]);
+
       msgBox.style.display = 'block';
-      if (data.success) {
+      if (!error) {
         msgBox.style.background = '#0a2e22';
         msgBox.style.color = '#4ecfa0';
-        msgBox.textContent = data.message;
+        msgBox.textContent = 'Merci ! Votre avis sera publié après validation.';
         document.getElementById('avis-nom').value = '';
         document.getElementById('avis-role').value = '';
         document.getElementById('avis-message').value = '';
@@ -806,13 +812,13 @@
       } else {
         msgBox.style.background = '#2e0a0a';
         msgBox.style.color = '#f09595';
-        msgBox.textContent = data.message;
+        msgBox.textContent = 'Erreur : ' + error.message;
       }
     } catch(e) {
       msgBox.style.display = 'block';
       msgBox.style.background = '#2e0a0a';
       msgBox.style.color = '#f09595';
-      msgBox.textContent = 'Erreur réseau. Vérifiez que XAMPP est démarré.';
+      msgBox.textContent = 'Erreur réseau. Réessayez plus tard.';
     }
   }
 </script>
